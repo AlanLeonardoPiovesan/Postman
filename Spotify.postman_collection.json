@@ -1,0 +1,418 @@
+{
+	"info": {
+		"_postman_id": "cad492b7-abd2-4a86-8aa6-8b18c394abda",
+		"name": "Spotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25858264"
+	},
+	"item": [
+		{
+			"name": "Request User Authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{secUrl}}/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{redirect_uri}}",
+					"host": [
+						"{{secUrl}}"
+					],
+					"path": [
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "{{redirect_uri}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Access Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "{{code}}",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "{{redirect_uri}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{secUrl}}/api/token",
+					"host": [
+						"{{secUrl}}"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Current User's Profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/me",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Available Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/me/player/devices",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me",
+						"player",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Currently Playing Track",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const artista = pm.response.json();\r",
+							"const album = pm.response.json();\r",
+							"const musica = pm.response.json();\r",
+							"\r",
+							"console.log('Artista: ' + artista.item.album.artists[0].name);\r",
+							"console.log('Álbum: ' + album.item.album.name);\r",
+							"console.log('Música: ' + musica.item.name)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/me/player/currently-playing",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me",
+						"player",
+						"currently-playing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the User's Queue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"if (pm.response.json().currently_playing !== null) {\r",
+							"    const currently = pm.response.json();\r",
+							"\r",
+							"    console.log('Tocando agora: ' + currently.currently_playing.album.artists[0].name + ' - ' + currently.currently_playing.name);\r",
+							"    console.log('Próxima música: ' + currently.queue[0].artists[0].name + ' - ' + currently.queue[0].name);\r",
+							"    console.log('Na fila: ' + currently.queue[1].artists[0].name + ' - ' + currently.queue[1].name);\r",
+							"} else {\r",
+							"    console.log('Por favor, abra seu aplicativo Spotify e de Play em uma música');\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Os valores são válidos\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    if (responseJson.currently_playing !== null) {\r",
+							"        pm.expect(responseJson.currently_playing.album.artists[0].name).to.exist;\r",
+							"        pm.expect(responseJson.currently_playing.name).to.exist;\r",
+							"        pm.expect(responseJson.queue[0].artists[0].name).to.exist;\r",
+							"        pm.expect(responseJson.queue[0].name).to.exist;\r",
+							"        pm.expect(responseJson.queue[1].artists[0].name).to.exist;\r",
+							"        pm.expect(responseJson.queue[1].name).to.exist;\r",
+							"    } else {\r",
+							"        pm.expect(responseJson).to.have.property(\"currently_playing\").that.is.null;\r",
+							"        console.log('O valor é nulo');\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/me/player/queue",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me",
+						"player",
+						"queue"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "redirect_uri",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.clear();"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.spotify.com/v1"
+		},
+		{
+			"key": "code",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secUrl",
+			"value": "https://accounts.spotify.com"
+		},
+		{
+			"key": "redirect_uri",
+			"value": "Your URI"
+		},
+		{
+			"key": "client_id",
+			"value": "Your client_id"
+		},
+		{
+			"key": "client_secret",
+			"value": "Your client_secret"
+		},
+		{
+			"key": "acessToken",
+			"value": "Your Acess Token",
+			"type": "string"
+		},
+		{
+			"key": "OAuth Token Get Currently Playing Track",
+			"value": "Your OAuth Token Get Currently Plating Track"
+		},
+		{
+			"key": "OAuth Token Get Available Devices",
+			"value": "Your OAuth Token Get Available Devices"
+		},
+		{
+			"key": "OAuth Token Get the User's Queue",
+			"value": "Your OAuth Token Get the User's Queue"
+		}
+	]
+}

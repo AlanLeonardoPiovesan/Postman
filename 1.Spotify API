@@ -412,142 +412,6 @@
 			"response": []
 		},
 		{
-			"name": "Search for Artist",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"console.log(\"Artista: \" + response.artists.items[0].name);\r",
-							"pm.environment.set(\"nameBand\", response.artists.items[0].name);\r",
-							"\r",
-							"const queryParam = pm.request.url.query.toObject();\r",
-							"const q = decodeURIComponent(queryParam.q);\r",
-							"\r",
-							"pm.test(\"The band name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameBand\")));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/search?q=Napalm Death&type=artist&limit=1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"search"
-					],
-					"query": [
-						{
-							"key": "q",
-							"value": "Napalm Death"
-						},
-						{
-							"key": "type",
-							"value": "artist"
-						},
-						{
-							"key": "limit",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search for Album",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"console.log(\"Album: \" + response.albums.items[0].name + \" do \" + response.albums.items[0].artists[0].name);\r",
-							"pm.environment.set(\"nameAlbum\", response.albums.items[0].name);\r",
-							"\r",
-							"const queryParam = pm.request.url.query.toObject();\r",
-							"const q = decodeURIComponent(queryParam.q);\r",
-							"\r",
-							"pm.test(\"The album name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/search?q=Back for the Attack&type=album&limit=1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"search"
-					],
-					"query": [
-						{
-							"key": "q",
-							"value": "Back for the Attack"
-						},
-						{
-							"key": "type",
-							"value": "album"
-						},
-						{
-							"key": "limit",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Search for Random Music",
 			"event": [
 				{
@@ -616,7 +480,77 @@
 			"response": []
 		},
 		{
-			"name": "Start/Resume Playback",
+			"name": "Search for Album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"console.log(\"Album: \" + response.albums.items[0].name + \" do \" + response.albums.items[0].artists[0].name);\r",
+							"pm.environment.set(\"nameAlbum\", response.albums.items[0].name);\r",
+							"\r",
+							"const queryParam = pm.request.url.query.toObject();\r",
+							"const q = decodeURIComponent(queryParam.q);\r",
+							"\r",
+							"pm.test(\"The album name is the same as what you are looking for\", function () {\r",
+							"    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/search?q=Tooth and Nail&type=album&limit=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Tooth and Nail"
+						},
+						{
+							"key": "type",
+							"value": "album"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start/Resume Album",
 			"event": [
 				{
 					"listen": "test",
@@ -706,6 +640,205 @@
 				},
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"context_uri\": \"{{uriAlbum}}\",\r\n    \"offset\": {\r\n        \"position\": 0\r\n    },\r\n    \"position_ms\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/me/player/play?device_id=785ae4146bf58ae35c5de1c6140adf116e5f2974",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me",
+						"player",
+						"play"
+					],
+					"query": [
+						{
+							"key": "device_id",
+							"value": "785ae4146bf58ae35c5de1c6140adf116e5f2974"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for Artist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"console.log(\"Artista: \" + response.artists.items[0].name);\r",
+							"pm.environment.set(\"nameBand\", response.artists.items[0].name);\r",
+							"\r",
+							"const queryParam = pm.request.url.query.toObject();\r",
+							"const q = decodeURIComponent(queryParam.q);\r",
+							"\r",
+							"pm.test(\"The band name is the same as what you are looking for\", function () {\r",
+							"    pm.expect(q).to.eql((pm.environment.get(\"nameBand\")));\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"uriArtists\", response.artists.items[0].uri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/search?q=Sepultura&type=artist&limit=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Sepultura"
+						},
+						{
+							"key": "type",
+							"value": "artist"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start/Resume Artist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 204) {\r",
+							"  pm.test(\"Status code is 204 - Start or Resume Music is 100%\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(204);\r",
+							"  });\r",
+							"} \r",
+							"    else if (pm.response.code === 502) {\r",
+							"  pm.test(\"Status code is 502 - Your app is closed! Please, open.\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(502);\r",
+							"  });\r",
+							"} \r",
+							"    else if (pm.response.code === 404) {\r",
+							"  pm.test(\"Status code is 404 - Your app is closed! Please, open.\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"  });\r",
+							"} \r",
+							"        else {\r",
+							"  // código de status não esperado\r",
+							"  pm.test(\"Unexpected status code\", function () {\r",
+							"    pm.expect.fail(\"Unexpected status code: \" + pm.response.code);\r",
+							"  });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "redirect_uri",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "state",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "MyAuth2 Scope: user-modify-playback-state",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"context_uri\": \"{{uriArtists}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "{{baseUrl}}/me/player/play?device_id=785ae4146bf58ae35c5de1c6140adf116e5f2974",
 					"host": [

@@ -25,7 +25,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{secUrl}}/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{redirect_uri}}",
+					"raw": "{{secUrl}}/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{Url}}",
 					"host": [
 						"{{secUrl}}"
 					],
@@ -43,7 +43,7 @@
 						},
 						{
 							"key": "redirect_uri",
-							"value": "{{redirect_uri}}"
+							"value": "{{Url}}"
 						}
 					]
 				}
@@ -147,7 +147,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"myDeviceId\", response.devices[0].id)"
 						],
 						"type": "text/javascript"
 					}
@@ -424,85 +428,28 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"console.log(response.tracks.items[0].name + \" do \" + response.tracks.items[0].artists[0].name);\r",
-							"pm.environment.set(\"nameTrack\", response.tracks.items[0].name);\r",
+							"console.log(response.tracks.items[0].name + \" do \" + response.tracks.items[0].artists[0].name + \".\" + \" Álbum: \" + response.albums.items[0].name);\r",
 							"\r",
+							"//Validar se a busca é igual ao resultado retornado\r",
 							"const queryParam = pm.request.url.query.toObject();\r",
 							"const q = decodeURIComponent(queryParam.q);\r",
 							"\r",
 							"pm.test(\"The track name is the same as what you are looking for\", function () {\r",
 							"    pm.expect(q).to.eql((pm.environment.get(\"nameTrack\")));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/search?q=Desperate Cry&type=track&limit=1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"search"
-					],
-					"query": [
-						{
-							"key": "q",
-							"value": "Desperate Cry"
-						},
-						{
-							"key": "type",
-							"value": "track"
-						},
-						{
-							"key": "limit",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search for Album",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"console.log(\"Album: \" + response.albums.items[0].name + \" do \" + response.albums.items[0].artists[0].name);\r",
+							"// variaveis de ambiente para coletar e registrar a uri \r",
+							"pm.environment.set(\"uriTrack\", response.tracks.items[0].uri);\r",
+							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);\r",
+							"pm.environment.set(\"uriArtists\", response.albums.items[0].artists[0].uri);\r",
+							"\r",
+							"// variaveis de ambiente para coletar os dados e após validar as informações de reprodução\r",
+							"pm.environment.set(\"nameTrack\", response.tracks.items[0].name);\r",
 							"pm.environment.set(\"nameAlbum\", response.albums.items[0].name);\r",
+							"pm.environment.set(\"nameArtists\", response.albums.items[0].artists[0].name);\r",
 							"\r",
-							"const queryParam = pm.request.url.query.toObject();\r",
-							"const q = decodeURIComponent(queryParam.q);\r",
-							"\r",
-							"pm.test(\"The album name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
-							"});\r",
-							"\r",
-							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);"
+							"//Utilizado na request Start/Resume Album para mostrar qual reprodução se iniciou\r",
+							"pm.environment.set(\"dadosReproducao\", response.albums.items[0].name + \" de \" + response.albums.items[0].artists[0].name)"
 						],
 						"type": "text/javascript"
 					}
@@ -524,7 +471,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/search?q=Tooth and Nail&type=album&limit=1",
+					"raw": "{{baseUrl}}/search?q=album:Point of Entry&q=artist:Judas Priest&type=album,artist,track&limit=1",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -534,11 +481,20 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "Tooth and Nail"
+							"value": "album:Point of Entry"
+						},
+						{
+							"key": "q",
+							"value": "artist:Judas Priest"
+						},
+						{
+							"key": "q",
+							"value": "track: Hot Rockin'",
+							"disabled": true
 						},
 						{
 							"key": "type",
-							"value": "album"
+							"value": "album,artist,track"
 						},
 						{
 							"key": "limit",
@@ -550,12 +506,13 @@
 			"response": []
 		},
 		{
-			"name": "Start/Resume Album",
+			"name": "Start/Resume Random Music",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"// teste de status do aplicativo - 204 o app está aberto e funcionando 100%, os outros 'code' retornarão quando o app estiver fechado ou app sem conexão a internet \r",
 							"if (pm.response.code === 204) {\r",
 							"  pm.test(\"Status code is 204 - Start or Resume Music is 100%\", function () {\r",
 							"    pm.expect(pm.response.code).to.eql(204);\r",
@@ -576,7 +533,11 @@
 							"  pm.test(\"Unexpected status code\", function () {\r",
 							"    pm.expect.fail(\"Unexpected status code: \" + pm.response.code);\r",
 							"  });\r",
-							"}"
+							"}\r",
+							"\r",
+							"// Define a variavel de ambiente como constante para imprimir no console ao final da Request \r",
+							"const variavelAmbiente = pm.environment.get(\"dadosReproducao\");\r",
+							"console.log(\"A reprodução do álbum: \" + variavelAmbiente + \" iniciou com sucesso\");"
 						],
 						"type": "text/javascript"
 					}
@@ -650,7 +611,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/me/player/play?device_id=785ae4146bf58ae35c5de1c6140adf116e5f2974",
+					"raw": "{{baseUrl}}/me/player/play?device_id={{myDeviceId}}",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -662,7 +623,7 @@
 					"query": [
 						{
 							"key": "device_id",
-							"value": "785ae4146bf58ae35c5de1c6140adf116e5f2974"
+							"value": "{{myDeviceId}}"
 						}
 					]
 				}
@@ -670,29 +631,40 @@
 			"response": []
 		},
 		{
-			"name": "Search for Artist",
+			"name": "Search for Album",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const response = pm.response.json();\r",
-							"\r",
+							"// Teste do status\r",
 							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"console.log(\"Artista: \" + response.artists.items[0].name);\r",
-							"pm.environment.set(\"nameBand\", response.artists.items[0].name);\r",
+							"//leitura do Json\r",
+							"const response = pm.response.json();\r",
 							"\r",
+							"//leitura do Json com no caminho desejado\r",
+							"console.log(\"Album: \" + response.albums.items[0].name + \" do \" + response.albums.items[0].artists[0].name);\r",
+							"//cria a variavel de ambiente para visualização no console e utilização posterior\r",
+							"pm.environment.set(\"nameAlbum\", response.albums.items[0].name);\r",
+							"\r",
+							"//Verificar se o parâmetro de consulta (query parameter) chamado \"q\" na URL é igual ao nome de um álbum que foi previamente armazenado em uma variável de ambiente \"nameAlbum\"\r",
+							"//1º obtém todos os parâmetros de consulta da URL da solicitação atual e os converte em um objeto JavaScript\r",
+							"//2º decodifica o valor do parâmetro de consulta \"q\" e o armazena em uma variável chamada \"q\"\r",
+							"//3º verificar se o valor da variável \"q\" é igual ao valor da variável de ambiente \"nameAlbum\". Se os valores forem iguais, o teste passa, caso contrário, o teste falha.\r",
 							"const queryParam = pm.request.url.query.toObject();\r",
 							"const q = decodeURIComponent(queryParam.q);\r",
-							"\r",
-							"pm.test(\"The band name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameBand\")));\r",
+							"pm.test(\"The album name is the same as what you are looking for\", function () {\r",
+							"    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
 							"});\r",
 							"\r",
-							"pm.environment.set(\"uriArtists\", response.artists.items[0].uri);"
+							"//Utilizado na request Start/Resume Album para preencher automaticamente o Body Request ao enviar o PUT para iniciar a reprodução do álbum\r",
+							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);\r",
+							"\r",
+							"//Utilizado na request Start/Resume Album para mostrar qual reprodução se iniciou\r",
+							"pm.environment.set(\"dadosReproducao\", response.albums.items[0].name + \" de \" + response.albums.items[0].artists[0].name)"
 						],
 						"type": "text/javascript"
 					}
@@ -714,7 +686,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/search?q=Sepultura&type=artist&limit=1",
+					"raw": "{{baseUrl}}/search?q=End of the Point&type=album&limit=1",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -724,7 +696,205 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "Sepultura"
+							"value": "End of the Point"
+						},
+						{
+							"key": "type",
+							"value": "album"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start/Resume Album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// teste de status do aplicativo - 204 o app está aberto e funcionando 100%, os outros 'code' retornarão quando o app estiver fechado ou app sem conexão a internet \r",
+							"if (pm.response.code === 204) {\r",
+							"  pm.test(\"Status code is 204 - Start or Resume Music is 100%\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(204);\r",
+							"  });\r",
+							"} \r",
+							"    else if (pm.response.code === 502) {\r",
+							"  pm.test(\"Status code is 502 - Your app is closed! Please, open.\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(502);\r",
+							"  });\r",
+							"} \r",
+							"    else if (pm.response.code === 404) {\r",
+							"  pm.test(\"Status code is 404 - Your app is closed! Please, open.\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"  });\r",
+							"} \r",
+							"        else {\r",
+							"  // código de status não esperado\r",
+							"  pm.test(\"Unexpected status code\", function () {\r",
+							"    pm.expect.fail(\"Unexpected status code: \" + pm.response.code);\r",
+							"  });\r",
+							"}\r",
+							"\r",
+							"// Define a variavel de ambiente como constante para imprimir no console ao final da Request \r",
+							"const variavelAmbiente = pm.environment.get(\"dadosReproducao\");\r",
+							"console.log(\"A reprodução do álbum: \" + variavelAmbiente + \" iniciou com sucesso\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "redirect_uri",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "state",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "MyAuth2 Scope: user-modify-playback-state",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"context_uri\": \"{{uriAlbum}}\",\r\n    \"offset\": {\r\n        \"position\": 0\r\n    },\r\n    \"position_ms\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/me/player/play?device_id={{myDeviceId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"me",
+						"player",
+						"play"
+					],
+					"query": [
+						{
+							"key": "device_id",
+							"value": "{{myDeviceId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for Artist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200 - Working 100%\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"console.log(\"Artista: \" + response.artists.items[0].name);\r",
+							"pm.environment.set(\"nameArtists\", response.artists.items[0].name);\r",
+							"\r",
+							"const queryParam = pm.request.url.query.toObject();\r",
+							"const q = decodeURIComponent(queryParam.q);\r",
+							"\r",
+							"pm.test(\"The band name is the same as what you are looking for\", function () {\r",
+							"    pm.expect(q).to.eql((pm.environment.get(\"nameArtists\")));\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"uriArtists\", response.artists.items[0].uri);\r",
+							"\r",
+							"//Utilizado na request Start/Resume Artist para mostrar qual reprodução se iniciou\r",
+							"pm.environment.set(\"dadosReproducao\", response.artists.items[0].name)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/search?q=Napalm Death&type=artist&limit=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Napalm Death"
 						},
 						{
 							"key": "type",
@@ -766,7 +936,10 @@
 							"  pm.test(\"Unexpected status code\", function () {\r",
 							"    pm.expect.fail(\"Unexpected status code: \" + pm.response.code);\r",
 							"  });\r",
-							"}"
+							"}\r",
+							"\r",
+							"const variavelAmbiente = pm.environment.get(\"dadosReproducao\");\r",
+							"console.log(\"A reprodução do artista: \" + variavelAmbiente + \" iniciou com sucesso\");"
 						],
 						"type": "text/javascript"
 					}
@@ -840,7 +1013,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/me/player/play?device_id=785ae4146bf58ae35c5de1c6140adf116e5f2974",
+					"raw": "{{baseUrl}}/me/player/play?device_id={{myDeviceId}}",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -852,7 +1025,7 @@
 					"query": [
 						{
 							"key": "device_id",
-							"value": "785ae4146bf58ae35c5de1c6140adf116e5f2974"
+							"value": "{{myDeviceId}}"
 						}
 					]
 				}

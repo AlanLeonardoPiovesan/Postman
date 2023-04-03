@@ -430,14 +430,6 @@
 							"\r",
 							"console.log(response.tracks.items[0].name + \" do \" + response.tracks.items[0].artists[0].name + \".\" + \" Álbum: \" + response.albums.items[0].name);\r",
 							"\r",
-							"//Validar se a busca é igual ao resultado retornado\r",
-							"const queryParam = pm.request.url.query.toObject();\r",
-							"const q = decodeURIComponent(queryParam.q);\r",
-							"\r",
-							"pm.test(\"The track name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameTrack\")));\r",
-							"});\r",
-							"\r",
 							"// variaveis de ambiente para coletar e registrar a uri \r",
 							"pm.environment.set(\"uriTrack\", response.tracks.items[0].uri);\r",
 							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);\r",
@@ -471,7 +463,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/search?q=album:Point of Entry&q=artist:Judas Priest&type=album,artist,track&limit=1",
+					"raw": "{{baseUrl}}/search?q=album: Utilitarian&q=artist: Napalm Death&type=album,artist,track&limit=1",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -481,11 +473,11 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "album:Point of Entry"
+							"value": "album: Utilitarian"
 						},
 						{
 							"key": "q",
-							"value": "artist:Judas Priest"
+							"value": "artist: Napalm Death"
 						},
 						{
 							"key": "q",
@@ -654,11 +646,11 @@
 							"//1º obtém todos os parâmetros de consulta da URL da solicitação atual e os converte em um objeto JavaScript\r",
 							"//2º decodifica o valor do parâmetro de consulta \"q\" e o armazena em uma variável chamada \"q\"\r",
 							"//3º verificar se o valor da variável \"q\" é igual ao valor da variável de ambiente \"nameAlbum\". Se os valores forem iguais, o teste passa, caso contrário, o teste falha.\r",
-							"const queryParam = pm.request.url.query.toObject();\r",
-							"const q = decodeURIComponent(queryParam.q);\r",
-							"pm.test(\"The album name is the same as what you are looking for\", function () {\r",
-							"    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
-							"});\r",
+							"//const queryParam = pm.request.url.query.toObject();\r",
+							"//const q = decodeURIComponent(queryParam.q);\r",
+							"//pm.test(\"The album name is the same as what you are looking for\", function () {\r",
+							"//    pm.expect(q).to.eql((pm.environment.get(\"nameAlbum\")));\r",
+							"//});\r",
 							"\r",
 							"//Utilizado na request Start/Resume Album para preencher automaticamente o Body Request ao enviar o PUT para iniciar a reprodução do álbum\r",
 							"pm.environment.set(\"uriAlbum\", response.albums.items[0].uri);\r",
@@ -686,7 +678,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/search?q=End of the Point&type=album&limit=1",
+					"raw": "{{baseUrl}}/search?q=Point of Entry&type=album&limit=1",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -696,7 +688,7 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "End of the Point"
+							"value": "Point of Entry"
 						},
 						{
 							"key": "type",

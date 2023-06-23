@@ -179,5 +179,31 @@
 			],
 			"description": "Follow the instructions in the request documentation."
 		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collectionUid",
+			"value": "Your Collection ID"
+		}
 	]
 }

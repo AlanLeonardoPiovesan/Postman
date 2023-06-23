@@ -646,10 +646,30 @@
 			"description": "Follow the instructions in the request documentation."
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
 			"key": "collectionUid",
-			"value": "25858264-5569cff0-25c8-4648-945f-11264f5a86c0"
+			"value": "Your Collection ID"
 		}
 	]
 }

@@ -247,6 +247,11 @@
 		{
 			"key": "talls",
 			"value": 7
+		},
+		{
+			"key": "collectionUid",
+			"value": "Your Collection Uid",
+			"type": "string"
 		}
 	]
 }

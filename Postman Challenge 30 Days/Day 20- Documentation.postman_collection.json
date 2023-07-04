@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "f7e96e49-c26a-45b8-9128-66170d370d29",
+		"name": "Day 20: Documentation",
+		"description": "## Instructions for Day 20: Documentation\n\n1.  **Get the challenge:** Fork [the parent collection `Day 20: Documentation`](https://www.postman.com/postman/workspace/30-days-of-postman-for-developers/documentation/1559645-0f00502d-d2d8-45fc-bd69-0fbb68eb5733) from the main workspace to your own public workspace.\n2.  **Read the documentation:** In your fork, select the first folder. Expand the context bar on the right to follow the instructions in the collection documentation.\n3.  **Submit your solution:** Select the second folder `Submit your solution` and follow the instructions in the documentation to validate your solution.\n    \n\n## Concepts covered\n\n*   [Documenting your API](https://learning.postman.com/docs/publishing-your-api/documenting-your-api/)\n    \n\n## Additional resources\n\n*   [The Good Documentation checklist](https://blog.postman.com/postman-good-documentation-checklist/)\n*   [The Ultimate API Publisher's Guide](https://medium.com/better-practices/the-ultimate-api-publishers-guide-be74a2692326)\n*   [Documentation](https://www.tiktok.com/@joycejetson/video/7072797681902521643) tiktok\n    \n\n## Next challenge\n\n*   [WebSockets](https://www.postman.com/postman/workspace/30-days-of-postman-for-developers/documentation/1559645-8b2c3197-1df3-44ba-9687-eba60470d270)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25858264",
+		"_collection_link": "https://www.postman.com/cloudy-zodiac-144738/workspace/30-days-of-postman-for-developers/collection/25858264-f7e96e49-c26a-45b8-9128-66170d370d29?action=share&creator=25858264&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Documentation",
+			"item": [
+				{
+					"name": "Documentation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getByArtist($name: String!) {\r\n    queryArtists (byName: $name) {\r\n        name\r\n        image\r\n        albums {\r\n            name\r\n        }\r\n    }\r\n}",
+								"variables": "{\r\n    \"name\": \"King Diamond\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "https://joyce-spotify-graphql.herokuapp.com/graphql",
+							"protocol": "https",
+							"host": [
+								"joyce-spotify-graphql",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						},
+						"description": "## Obter informações do artista por nome\n\n**Descrição da solicitação:**\n\nEsta solicitação executa uma consulta GraphQL para obter informações sobre um artista com base em seu nome. A consulta é feita para o endpoint `/graphql` da API.\n\n**Documentação oficial:**  \nVocê pode encontrar a documentação oficial da API GraphQL [aqui](https://joyce-spotify-graphql.herokuapp.com).\n\n**Endpoint:** `POST` **`https://joyce-spotify-graphql.herokuapp.com/graphql`**\n\n**Corpo da solicitação - QUERY:**\n\n``` graphql\nquery getByArtist($name: String!) {\n    queryArtists (byName: $name) {\n        name\n        image\n        albums {\n            name\n        }\n    }\n}\n\n```\n\n**Variáveis - GRAPHQL VARIABLES:**\n\n``` json\n{\n    \"name\": \"King Diamond\"\n}\n\n```\n\n**Exemplo de resposta bem-sucedida:**  \nA solicitação retornará um código de status 200 (OK) e um objeto JSON com as informações do artista. Aqui está um exemplo simplificado:\n\n``` json\n{\n    \"data\": {\n        \"queryArtists\": {\n            \"name\": \"King Diamond\",\n            \"image\": \"https://example.com/images/king-diamond.jpg\",\n            \"albums\": [\n                { \"name\": \"Abigail\" },\n                { \"name\": \"Them\" },\n                { \"name\": \"Conspiracy\" }\n            ]\n        }\n    }\n}\n\n```"
+					},
+					"response": [
+						{
+							"name": "Documentation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query getByArtist($name: String!) {\r\n    queryArtists (byName: $name) {\r\n        name\r\n        image\r\n        albums {\r\n            name\r\n        }\r\n    }\r\n}",
+										"variables": "{\r\n    \"name\": \"King Diamond\"\r\n}"
+									}
+								},
+								"url": {
+									"raw": "https://joyce-spotify-graphql.herokuapp.com/graphql",
+									"protocol": "https",
+									"host": [
+										"joyce-spotify-graphql",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "8920"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"22d8-xuZD8kRG0J4ZykpO+Uw/lu1blwo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Jul 2023 18:04:35 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"queryArtists\": [\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb88335c2a97302c880d42a134\",\n                \"albums\": [\n                    {\n                        \"name\": \"Songs for the Dead: Live at the Fillmore in Philadelphia\"\n                    },\n                    {\n                        \"name\": \"Songs for the Dead: Live at Graspop Metal Meeting\"\n                    },\n                    {\n                        \"name\": \"Dreams of Horror\"\n                    },\n                    {\n                        \"name\": \"Give Me Your Soul...Please\"\n                    },\n                    {\n                        \"name\": \"Deadly Lullabyes (Live)\"\n                    },\n                    {\n                        \"name\": \"The Puppet Master\"\n                    },\n                    {\n                        \"name\": \"Abigail II - The Revenge\"\n                    },\n                    {\n                        \"name\": \"20 Years Ago - A Night of Rehearsal\"\n                    },\n                    {\n                        \"name\": \"House of God\"\n                    },\n                    {\n                        \"name\": \"House Of God - Reissue\"\n                    },\n                    {\n                        \"name\": \"Voodoo\"\n                    },\n                    {\n                        \"name\": \"Voodoo (Reissue)\"\n                    },\n                    {\n                        \"name\": \"The Graveyard\"\n                    },\n                    {\n                        \"name\": \"The Graveyard - Reissue\"\n                    },\n                    {\n                        \"name\": \"The Spider's Lullabye (Deluxe Version)\"\n                    },\n                    {\n                        \"name\": \"The Spider's Lullabye\"\n                    },\n                    {\n                        \"name\": \"The Spider's Lullabye\"\n                    },\n                    {\n                        \"name\": \"In Concert 1987: Abigail (Live)\"\n                    },\n                    {\n                        \"name\": \"The Eye\"\n                    },\n                    {\n                        \"name\": \"Conspiracy\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b27352147165c0a39006d446af57\",\n                \"albums\": [\n                    {\n                        \"name\": \"Legacy\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"Mercyful Fate\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb0f9f487d327776c58129f457\",\n                \"albums\": [\n                    {\n                        \"name\": \"9\"\n                    },\n                    {\n                        \"name\": \"Dead Again\"\n                    },\n                    {\n                        \"name\": \"Into The Unknown\"\n                    },\n                    {\n                        \"name\": \"Time\"\n                    },\n                    {\n                        \"name\": \"In the Shadows\"\n                    },\n                    {\n                        \"name\": \"Return of the Vampire\"\n                    },\n                    {\n                        \"name\": \"The Beginning\"\n                    },\n                    {\n                        \"name\": \"Don't Break the Oath\"\n                    },\n                    {\n                        \"name\": \"Melissa\"\n                    },\n                    {\n                        \"name\": \"Evil\"\n                    },\n                    {\n                        \"name\": \"The Bell Witch - EP\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb6bd5239d596bb3419bdc31b2\",\n                \"albums\": [\n                    {\n                        \"name\": \"Paparapa\"\n                    },\n                    {\n                        \"name\": \"Babea\"\n                    },\n                    {\n                        \"name\": \"Aguanten\"\n                    },\n                    {\n                        \"name\": \"Desacatao Drill\"\n                    },\n                    {\n                        \"name\": \"Baby\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Doudou\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb2a00c8aa50fca246f1e1d994\",\n                \"albums\": [\n                    {\n                        \"name\": \"Neon\"\n                    },\n                    {\n                        \"name\": \"CDK?\"\n                    },\n                    {\n                        \"name\": \"Vai Sentando (FAST X Soundtrack)\"\n                    },\n                    {\n                        \"name\": \"Dring Dring\"\n                    },\n                    {\n                        \"name\": \"Dembow Tronico (Simo Cell Remixes)\"\n                    },\n                    {\n                        \"name\": \"TOY\"\n                    },\n                    {\n                        \"name\": \"Jugo\"\n                    },\n                    {\n                        \"name\": \"Badulakera\"\n                    },\n                    {\n                        \"name\": \"Purple Racks (King Doudou Remix)\"\n                    },\n                    {\n                        \"name\": \"Calor\"\n                    },\n                    {\n                        \"name\": \"LSDLNG, EP. 1\"\n                    },\n                    {\n                        \"name\": \"Pas touche minouche\"\n                    },\n                    {\n                        \"name\": \"Cardio\"\n                    },\n                    {\n                        \"name\": \"Casse Ton Dos\"\n                    },\n                    {\n                        \"name\": \"Pica (King Doudou Remix)\"\n                    },\n                    {\n                        \"name\": \"Internet Dreams\"\n                    },\n                    {\n                        \"name\": \"LSDLNG\"\n                    },\n                    {\n                        \"name\": \"Guaya\"\n                    },\n                    {\n                        \"name\": \"Cavernicola Remixes\"\n                    },\n                    {\n                        \"name\": \"Dolores\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond Tut\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb1f3d90d943047444d29e182e\",\n                \"albums\": [\n                    {\n                        \"name\": \"King Diamond Tut\"\n                    },\n                    {\n                        \"name\": \"Harvest Love\"\n                    },\n                    {\n                        \"name\": \"Bedroom Slang\"\n                    },\n                    {\n                        \"name\": \"Harvest Season\"\n                    },\n                    {\n                        \"name\": \"Gas Tank\"\n                    },\n                    {\n                        \"name\": \"July\"\n                    },\n                    {\n                        \"name\": \"Da Cou (Vancouver Anthem)\"\n                    },\n                    {\n                        \"name\": \"Black Roses\"\n                    },\n                    {\n                        \"name\": \"Smoke Shiva\"\n                    },\n                    {\n                        \"name\": \"Like This\"\n                    },\n                    {\n                        \"name\": \"Twin Souls\"\n                    },\n                    {\n                        \"name\": \"Pyramid Steps\"\n                    },\n                    {\n                        \"name\": \"#Gemstoned\"\n                    },\n                    {\n                        \"name\": \"Strictly 4 My Habibi's\"\n                    },\n                    {\n                        \"name\": \"Gas Tank\"\n                    },\n                    {\n                        \"name\": \"Cyber Storm\"\n                    },\n                    {\n                        \"name\": \"Luvocado\"\n                    },\n                    {\n                        \"name\": \"Wknd\"\n                    },\n                    {\n                        \"name\": \"420\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Davy Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5ebfb7669de3cacea7155c99e92\",\n                \"albums\": [\n                    {\n                        \"name\": \"Welcome To The Big Essex Movements: Hustlin Hard Or Go Home Care Package Compilation Album.\"\n                    },\n                    {\n                        \"name\": \"B4 Potential Kingin Super-Popstar 2 The Tape\"\n                    },\n                    {\n                        \"name\": \"25th December Studio The Debut Album (Deluxe Edition)\"\n                    },\n                    {\n                        \"name\": \"King Chief MoneyMan Goat In Dat Icy Gold Compilation Album\"\n                    },\n                    {\n                        \"name\": \"25th December Studio The Debut Album\"\n                    },\n                    {\n                        \"name\": \"I AM SO SMRT (THE YOUNGEST CEO) The Deluxe Volume 1\"\n                    },\n                    {\n                        \"name\": \"Work Hard As Gold In Dat Quarantine (Deluxe)\"\n                    },\n                    {\n                        \"name\": \"Love Is the Absence of Fear (Dexlue)\"\n                    },\n                    {\n                        \"name\": \"Discipline (Pain)\"\n                    },\n                    {\n                        \"name\": \"Mr Lonely\"\n                    },\n                    {\n                        \"name\": \"Nowhere\"\n                    },\n                    {\n                        \"name\": \"Handle It (Over 2)\"\n                    },\n                    {\n                        \"name\": \"Soulmates (Versions)\"\n                    },\n                    {\n                        \"name\": \"Heartcoldless (I Miss You)\"\n                    },\n                    {\n                        \"name\": \"Soulmates\"\n                    },\n                    {\n                        \"name\": \"How You Been (Wanna Show You)\"\n                    },\n                    {\n                        \"name\": \"Come To Us\"\n                    },\n                    {\n                        \"name\": \"Well Done (Over You)\"\n                    },\n                    {\n                        \"name\": \"Off My Mind (Fancy Her)\"\n                    },\n                    {\n                        \"name\": \"Good Morning\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"K Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5ebfe110a11e4b9a430b6ac4384\",\n                \"albums\": [\n                    {\n                        \"name\": \"'22 THE MIXTAPE\"\n                    },\n                    {\n                        \"name\": \"Woza EP\"\n                    },\n                    {\n                        \"name\": \"From The Hood To The World (Revisit)\"\n                    },\n                    {\n                        \"name\": \"ANTHEMS OF REVIVAL\"\n                    },\n                    {\n                        \"name\": \"HEAVEN VISION\"\n                    },\n                    {\n                        \"name\": \"Amaphupho\"\n                    },\n                    {\n                        \"name\": \"TAP IN\"\n                    },\n                    {\n                        \"name\": \"Get What's Mine\"\n                    },\n                    {\n                        \"name\": \"FMTP (From Madamza To Pitori)\"\n                    },\n                    {\n                        \"name\": \"No Limits\"\n                    },\n                    {\n                        \"name\": \"Love Me\"\n                    },\n                    {\n                        \"name\": \"Ke Etsang?\"\n                    },\n                    {\n                        \"name\": \"BIG GOD\"\n                    },\n                    {\n                        \"name\": \"I Can't Lose\"\n                    },\n                    {\n                        \"name\": \"3 Days No Sleep EP\"\n                    },\n                    {\n                        \"name\": \"The Fxcking Injury (Vocal Mix)\"\n                    },\n                    {\n                        \"name\": \"They Gotta Know\"\n                    },\n                    {\n                        \"name\": \"Wherever I Go\"\n                    },\n                    {\n                        \"name\": \"Count The Cost\"\n                    },\n                    {\n                        \"name\": \"Airways\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b273b62c15ad6a5687fbf8ce77a7\",\n                \"albums\": [\n                    {\n                        \"name\": \"God's Own\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King David\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5ebf0a1283e198013dbd6c28292\",\n                \"albums\": [\n                    {\n                        \"name\": \"Goth Cowboy\"\n                    },\n                    {\n                        \"name\": \"Corey Taylor\"\n                    },\n                    {\n                        \"name\": \"DOWN IN THE PARK\"\n                    },\n                    {\n                        \"name\": \"Gangstar\"\n                    },\n                    {\n                        \"name\": \"I'm A Soldier\"\n                    },\n                    {\n                        \"name\": \"Round And Round\"\n                    },\n                    {\n                        \"name\": \"Crush On Me\"\n                    },\n                    {\n                        \"name\": \"The Great Wall\"\n                    },\n                    {\n                        \"name\": \"Fireboy\"\n                    },\n                    {\n                        \"name\": \"Look In The Sky\"\n                    },\n                    {\n                        \"name\": \"Outside the Box\"\n                    },\n                    {\n                        \"name\": \"Don't Let Them In\"\n                    },\n                    {\n                        \"name\": \"You and I\"\n                    },\n                    {\n                        \"name\": \"Gtamf\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b273ee5494e41b8e8c28606d5d31\",\n                \"albums\": [\n                    {\n                        \"name\": \"In Your Pants\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Dif\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb47400082d3194ca0367773cf\",\n                \"albums\": [\n                    {\n                        \"name\": \"I Been Here Before\"\n                    },\n                    {\n                        \"name\": \"Port Of Detroit\"\n                    },\n                    {\n                        \"name\": \"Supply & Demand\"\n                    },\n                    {\n                        \"name\": \"Motivation\"\n                    },\n                    {\n                        \"name\": \"48203\"\n                    },\n                    {\n                        \"name\": \"Final Hour 2\"\n                    },\n                    {\n                        \"name\": \"Final Hour\"\n                    },\n                    {\n                        \"name\": \"The Leaks, Vol. 1\"\n                    },\n                    {\n                        \"name\": \"4th Quarter At The Pistons Game\"\n                    },\n                    {\n                        \"name\": \"Money Can't Buy You Love\"\n                    },\n                    {\n                        \"name\": \"Conquered\"\n                    },\n                    {\n                        \"name\": \"Dynasty\"\n                    },\n                    {\n                        \"name\": \"Tables Turn\"\n                    },\n                    {\n                        \"name\": \"Televised\"\n                    },\n                    {\n                        \"name\": \"Titos In Morocco\"\n                    },\n                    {\n                        \"name\": \"Rub It In\"\n                    },\n                    {\n                        \"name\": \"Game Reels\"\n                    },\n                    {\n                        \"name\": \"The Foundation\"\n                    },\n                    {\n                        \"name\": \"Family Business\"\n                    },\n                    {\n                        \"name\": \"The Aftermath EP\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"\",\n                \"albums\": [\n                    {\n                        \"name\": \"304 Sweat Her\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Dude\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb08c771015db0a54a55f59727\",\n                \"albums\": [\n                    {\n                        \"name\": \"Death\"\n                    },\n                    {\n                        \"name\": \"Black Rider On The Storm\"\n                    },\n                    {\n                        \"name\": \"Beware of Darkness\"\n                    },\n                    {\n                        \"name\": \"Full Virgo Moon\"\n                    },\n                    {\n                        \"name\": \"Music To Make War To\"\n                    },\n                    {\n                        \"name\": \"Sex\"\n                    },\n                    {\n                        \"name\": \"Songs of Flesh & Blood - In The Key of Light\"\n                    },\n                    {\n                        \"name\": \"Fear\"\n                    },\n                    {\n                        \"name\": \"Burning Daylight\"\n                    },\n                    {\n                        \"name\": \"Love\"\n                    },\n                    {\n                        \"name\": \"Tonight's Special Death\"\n                    },\n                    {\n                        \"name\": \"My Beloved Ghost\"\n                    },\n                    {\n                        \"name\": \"Lucifer\"\n                    },\n                    {\n                        \"name\": \"16 Tons (Instrumental)\"\n                    },\n                    {\n                        \"name\": \"16 Tons\"\n                    },\n                    {\n                        \"name\": \"Songs of The 1940s, Pt. 2\"\n                    },\n                    {\n                        \"name\": \"Black Rider On The Storm\"\n                    },\n                    {\n                        \"name\": \"Songs of The 1940s, Pt. 1\"\n                    },\n                    {\n                        \"name\": \"I Was Evil\"\n                    },\n                    {\n                        \"name\": \"Crazy\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Diamond\",\n                \"image\": \"\",\n                \"albums\": [\n                    {\n                        \"name\": \"Omo Tena\"\n                    },\n                    {\n                        \"name\": \"Omo Tena\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King D Mr. Perfect\",\n                \"image\": \"https://i.scdn.co/image/ab6761610000e5eb97d889f80a228eccfdeb64bd\",\n                \"albums\": [\n                    {\n                        \"name\": \"Levels\"\n                    },\n                    {\n                        \"name\": \"Black & Proud\"\n                    },\n                    {\n                        \"name\": \"On My Way\"\n                    },\n                    {\n                        \"name\": \"Again\"\n                    },\n                    {\n                        \"name\": \"Good Guy (Remix)\"\n                    },\n                    {\n                        \"name\": \"Good Guy\"\n                    },\n                    {\n                        \"name\": \"Dreams\"\n                    },\n                    {\n                        \"name\": \"Over You\"\n                    },\n                    {\n                        \"name\": \"Mad Freestyle\"\n                    },\n                    {\n                        \"name\": \"Invincible\"\n                    },\n                    {\n                        \"name\": \"I Need You\"\n                    },\n                    {\n                        \"name\": \"Ride or Die\"\n                    },\n                    {\n                        \"name\": \"Bands\"\n                    },\n                    {\n                        \"name\": \"Invincible\"\n                    },\n                    {\n                        \"name\": \"Let's Get Away\"\n                    },\n                    {\n                        \"name\": \"Higher Than the Moon\"\n                    },\n                    {\n                        \"name\": \"Green Eyes\"\n                    },\n                    {\n                        \"name\": \"No Lie\"\n                    },\n                    {\n                        \"name\": \"Show Me Something\"\n                    },\n                    {\n                        \"name\": \"Doin' Just Fine\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"Diamond King\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b273bc4c302672766e49dbbd2137\",\n                \"albums\": [\n                    {\n                        \"name\": \"Baltrí\"\n                    },\n                    {\n                        \"name\": \"Los Pedales\"\n                    },\n                    {\n                        \"name\": \"Triángulo de las Bermudas\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King Dan\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b273d12ffa91dc341212d563d3d1\",\n                \"albums\": [\n                    {\n                        \"name\": \"Eleven\"\n                    },\n                    {\n                        \"name\": \"Skeet & Poopie: The GYP Lp 2\"\n                    },\n                    {\n                        \"name\": \"Skeet & Poopie: The GYP Lp\"\n                    },\n                    {\n                        \"name\": \"Skeet & Poopie: The GYP\"\n                    },\n                    {\n                        \"name\": \"Straight Outta Naptown\"\n                    },\n                    {\n                        \"name\": \"Got It Like Me\"\n                    },\n                    {\n                        \"name\": \"Out Here Going Hard\"\n                    },\n                    {\n                        \"name\": \"Keep Hating On Me\"\n                    },\n                    {\n                        \"name\": \"The Chronicles 2021\"\n                    },\n                    {\n                        \"name\": \"The Chronicles, Pt. 2\"\n                    },\n                    {\n                        \"name\": \"I'm Just Getting Started, Pt. 2\"\n                    },\n                    {\n                        \"name\": \"I'm Just Getting Started\"\n                    },\n                    {\n                        \"name\": \"I'm Back Once Again\"\n                    },\n                    {\n                        \"name\": \"I'm Back Again\"\n                    },\n                    {\n                        \"name\": \"A Lot Of Noise Freestyle\"\n                    },\n                    {\n                        \"name\": \"Take It Whole\"\n                    },\n                    {\n                        \"name\": \"We Paid Freestyle (Remastered)\"\n                    },\n                    {\n                        \"name\": \"Fuck Boys 2008\"\n                    },\n                    {\n                        \"name\": \"U Keep Running Away\"\n                    },\n                    {\n                        \"name\": \"Dis 4 All My Niggaz\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"DIAMOND KING\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b273d2ae1cca768a83b4d96971b0\",\n                \"albums\": [\n                    {\n                        \"name\": \"Who Are You\"\n                    },\n                    {\n                        \"name\": \"Nobody Gets Me\"\n                    },\n                    {\n                        \"name\": \"17 People\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"King David\",\n                \"image\": \"https://i.scdn.co/image/ab67616d0000b2736fd641228497d3f5602077b2\",\n                \"albums\": [\n                    {\n                        \"name\": \"Brighter Days Ahead\"\n                    },\n                    {\n                        \"name\": \"King David Sings the Blues\"\n                    },\n                    {\n                        \"name\": \"Tiv Doo\"\n                    },\n                    {\n                        \"name\": \"Mo Me Za\"\n                    },\n                    {\n                        \"name\": \"Kilimishi\"\n                    },\n                    {\n                        \"name\": \"Ka Ishughun Se Lu Amin Ye\"\n                    },\n                    {\n                        \"name\": \"OZANA\"\n                    },\n                    {\n                        \"name\": \"State of Mind\"\n                    },\n                    {\n                        \"name\": \"King David\"\n                    },\n                    {\n                        \"name\": \"DFG: Destined For Greatness\"\n                    },\n                    {\n                        \"name\": \"King David\"\n                    },\n                    {\n                        \"name\": \"Thoughts Skillustrated\"\n                    },\n                    {\n                        \"name\": \"Organized G\"\n                    },\n                    {\n                        \"name\": \"The Aztec Ball Court\"\n                    },\n                    {\n                        \"name\": \"Tropical Happy Hour, Set 1\"\n                    },\n                    {\n                        \"name\": \"African Safari, Set 6\"\n                    },\n                    {\n                        \"name\": \"You Are The Reason (Radio Edit)\"\n                    },\n                    {\n                        \"name\": \"African Pop, Set 10\"\n                    },\n                    {\n                        \"name\": \"African Safari - Adventurous Ethnic Drumming And Tribal Dance Music, Vol. 07\"\n                    },\n                    {\n                        \"name\": \"African Ethno Pop, Set 1\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "It's time to work on your next challenge.\n\n1. **Document a request**: Add a single request to the folder `Documentation`. It can be a request from an API we've used previously or any API that you like. \n\n You've been reading the documentation for instructions on each of these challenges thus far. These [descriptions](https://learning.postman.com/docs/publishing-your-api/authoring-your-documentation/#documenting-with-descriptions) provide more information about a collection, folder, request, parameter, or header and are [formatted in Markdown](https://learning.postman.com/docs/publishing-your-api/authoring-your-documentation/#markdown-demo-collection). Include the following to explain how to use the endpoint:\n  - Request description formatted in Markdown\n  - Include at least one hyperlink to official documentation in the request description\n  - Parameter description if you add any parameters\n  - Header description if you add any headers\n  - Save a successful response from the server as [an example](https://learning.postman.com/docs/sending-requests/examples/#response-from-the-server)\n\n1. **Optional enhancements**: If it will help the user better understand how to use the endpoint, include the following (optional):\n  - [Visualize](https://learning.postman.com/docs/sending-requests/visualizer/) the response to help the user interpret the data\n  - [Test](https://learning.postman.com/docs/writing-scripts/test-scripts/) to aid users who experience unexpected errors\n  - Screenshot to aid users, for example, showing users where to get an API key\n  - More examples demonstrating an unsuccessful response and other scenarios\n  - **Do not to leak any secrets!** \n\n  Send your request to ensure a successful response and save your changes.\n\nOnce you complete these steps, move on to the next folder in this collection to submit your solution. Follow the instructions in the request documentation.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Submit your solution",
+			"item": [
+				{
+					"name": "submit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests\r",
+									"let pass = 0\r",
+									"let totalToPass = 5\r",
+									"\r",
+									"let collection = pm.response.json().collection\r",
+									"\r",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {\r",
+									"    pm.expect(true);\r",
+									"    pass += 1\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pass += 1\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Correct collection returned\", () => {\r",
+									"    pm.expect(collection.info.name).equals(\"Day 20: Documentation\")\r",
+									"    pass += 1\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Request added correctly\", () => {\r",
+									"    pm.expect(collection.item[0].item.length, 'check number of requests').is.greaterThan(0)\r",
+									"\r",
+									"    pass += 1\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Documentation added correctly\", () => {\r",
+									"    let firstRequest = collection.item[0].item[0]\r",
+									"\r",
+									"    pm.expect(firstRequest.request.description, 'check request description').to.exist\r",
+									"    let firstMarkdownLinkRegex = /\\[(.+)\\]\\((.+)\\)/\r",
+									"    pm.expect(firstRequest.request.description.match(firstMarkdownLinkRegex).length, 'check hyperlink').to.equal(3)\r",
+									"\r",
+									"    if (firstRequest.request.url.query) {\r",
+									"        firstRequest.request.url.query.forEach( (param) => {\r",
+									"            pm.expect(param.description, 'check param description').to.exist\r",
+									"        })\r",
+									"        pm.expect(firstRequest.request.url.query.forEach( (param) => { param.description}))\r",
+									"    }\r",
+									"\r",
+									"    if (firstRequest.request.header) {\r",
+									"        firstRequest.request.header.forEach( (header) => {\r",
+									"            pm.expect(header.description, 'check header description').to.exist\r",
+									"        })\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(firstRequest.response, 'check saved example').to.not.be.empty\r",
+									"\r",
+									"    pass += 1\r",
+									"})\r",
+									"\r",
+									"// visualization for test results\r",
+									"let template\r",
+									"if (pass == totalToPass) {\r",
+									"    template = `🍪 passing!\r",
+									"        <br />\r",
+									"        <img src=\"https://media1.giphy.com/media/c5eqVJN7oNLTq/giphy.gif?cid=ecf05e47ipdv9pm2ugb4rtqppcg4f291wve7s75ha1xocqhl&rid=giphy.gif&ct=g\" />\r",
+									"    `\r",
+									"} else {\r",
+									"    template = `🙅 please try again\r",
+									"        <br />\r",
+									"        <img src=\"https://media3.giphy.com/media/V6vNqIGP1RiMEwmMGV/giphy.gif?cid=ecf05e47dcpl5voxfkaw0l814ohtu15kcyvfe5x9lvyvc0sq&rid=giphy.gif&ct=g\" />\r",
+									"    `\r",
+									"}\r",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{postman_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/collections/{{collectionUid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"collections",
+								"{{collectionUid}}"
+							]
+						},
+						"description": "It's time to submit your solution.\n\n1. **Use a Postman environment:** Find the `Postman API env` environment from the previous challenge. Update the `collectionUid` with the current collection's ID.\n1. **Validate your solution**: Save your changes in the collection and environment. Hit **Send** and look under the **Tests** tab of the server response at the bottom to review your test results.\n\nIf you have any failures, review the failed test results or ask for support in the [community forum](https://community.postman.com/). When all of your tests pass, you are done with today's challenge. Remember to save your changes as you'll need to pass all the challenges to claim a **30 days of Postman** badge."
+					},
+					"response": []
+				}
+			],
+			"description": "Follow the instructions in the request documentation."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collectionUid",
+			"value": "Your Collection UID"
+		}
+	]
+}

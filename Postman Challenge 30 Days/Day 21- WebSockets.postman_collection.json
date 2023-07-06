@@ -93,7 +93,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://postman-echo.com/get?collectionUid={{collectionUid}}",
+							"raw": "https://postman-echo.com/get?collectionUid=64a46214f23baa20a05bafe3",
 							"protocol": "https",
 							"host": [
 								"postman-echo",
@@ -105,7 +105,7 @@
 							"query": [
 								{
 									"key": "collectionUid",
-									"value": "{{collectionUid}}"
+									"value": "64a46214f23baa20a05bafe3"
 								}
 							]
 						},
@@ -140,7 +140,7 @@
 	"variable": [
 		{
 			"key": "collectionUid",
-			"value": "Your Collection UID"
+			"value": "Your Day 21 Collection UID"
 		}
 	]
 }
